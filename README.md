@@ -25,6 +25,7 @@ The goals / steps of this project are the following:
 [examples]: ./output/examples.png "Examples"
 [lc]: ./output/learning_curve.png "Learning Curve"
 [n_signs]: ./output/number_of_signs.png "Distribution"
+[diag]: ./output/diagram.png "Diagram"
 
 ---
 
@@ -58,6 +59,8 @@ Most rare signs:
 * `Go straight or left`  train samples: 180
 * `Pedestrians`  train samples: 210
 * `End of all speed and passing limits`  train samples: 210
+
+The data is unevenly distributed. In order to mitigate the problem I use Oversampling, such as augmentation. Images will be scaled and rotated a bit randomly.
 
 ### Examples of signs:
 
@@ -99,6 +102,8 @@ The model consists of the following layers:
 | Softmax				|												|
 |						|												|
 
+![alt text][diag]
+
 I trained the model using the Adam optimizer (with momentum),  the learning rate is 1e-4 , dropout rate of 0.2 and batch size of 128.
 
 ##### Answer:
@@ -121,11 +126,6 @@ Final result:
 I found a few images on the Web and I preprocessed them:
 
 ![alt text][pre_processed]
-
-These images:
-
-* Include harder background
-* Contain artifacts such as jpeg compression
 
 Results of the prediction:
 
@@ -213,4 +213,17 @@ Top 5 Labels for image 'No entry':
  - 'Yield' with prob = 0.00
  - 'End of no passing' with prob = 0.00
 
-The model was able to correctly guess 9 of the 14 traffic signs, which gives an accuracy of ~64%.
+The model was able to correctly guess 9 of the 13 traffic signs, which gives an accuracy of ~69%.
+
+These images show a lower accurace because of they:
+
+* Include harder background
+* Contain artifacts such as jpeg compression
+
+I didn't analyze the defference in the prediction between images from Web and images from the validation set 'sign by sign', but in average the accuracy differs 93% - 69% = 24%.
+
+It's a quite big difference. As improvement I can suggest:
+
+* Use more input data
+* Input data must be evenly distributed
+* Another architecture of the CNN could be used, such as AlexNET or ResNet.
